@@ -1,0 +1,12 @@
+# default scanning options
+# you can add more option files to this folder (make sure they're executable) and use the -og / --option-group argument to use them for scanning
+# see https://github.com/rocketraman/sane-scan-pdf?tab=readme-ov-file#configuration
+
+DEVICE=""
+MODE="Color"
+MODE_CHANGED=1
+SKIP_EMPTY_PAGES=1
+DUPLEX=1
+SEARCHABLE=1
+SIZE=A4
+LANGUAGE="eng+deu"

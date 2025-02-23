@@ -1,0 +1,38 @@
+name: Scan Server
+version: "1.0.7"
+slug: scan-server
+description: Use your home assistant system as a scan server.
+arch:
+  - amd64
+  - aarch64
+usb: true
+init: false
+hassio_api: true
+homeassistant_api: true
+hassio_role: default
+host_network: true
+privileged:
+  - NET_ADMIN
+  - NET_RAW
+map:
+  - addon_config:rw
+  - homeassistant_config:rw
+ports:
+  6566/tcp: 6566
+  10100/tcp: 10100
+  10101/tcp: 10101
+  10102/tcp: 10102
+  10103/tcp: 10103
+  10104/tcp: 10104
+  10105/tcp: 10105
+startup: services
+devices:
+  - /dev/bus/usb
+ports_description:
+  6566/tcp: sane-port
+  10100/tcp: sane data connection
+  10101/tcp: sane data connection
+  10102/tcp: sane data connection
+  10103/tcp: sane data connection
+  10104/tcp: sane data connection
+  10105/tcp: sane data connection

@@ -1,0 +1,9 @@
+{
+    "domain": "scanner",
+    "name": "Scan Server Add-On Integration",
+    "dependencies": [],
+    "codeowners": ["@Connum"],
+    "version": "1.0.0",
+    "requirements": []
+  }
+  
