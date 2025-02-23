@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "START $SCANBD_ACTION for device $SCANBD_DEVICE"
+
+# get_scan_filename automatically increments the internal counter and generates a file name based on the filename_base option
+FILENAME="$(get_scan_filename)"
+
+echo "scanning to $FILENAME..."
+
+# Perform the scan and save with the formatted filename
+sane-scan-pdf -o "$FILENAME" -x "$SCANBD_DEVICE"
+
+echo "STOP $SCANBD_ACTION for device $SCANBD_DEVICE"

@@ -1,0 +1,31 @@
+#!/usr/bin/with-contenv bashio
+
+[ -f data/scanserver.json ] || echo '{"scanCounter": 0}' > data/scanserver.json
+
+# Increment the scan counter
+TMP_FILE=$(mktemp)
+jq '.scanCounter += 1' data/scanserver.json > "$TMP_FILE" && mv "$TMP_FILE" data/scanserver.json
+
+# Get the updated counter value
+COUNTER=$(jq -r '.scanCounter' data/scanserver.json)
+
+OPTIONS_FILE="/data/options.json"
+FILENAME_BASE=$(jq -r '.filename_base' $OPTIONS_FILE)
+
+RESPONSE=$(curl -sSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/mounts)
+
+user_path=$(echo "$RESPONSE" | jq -r '
+  if .result == "ok" then
+    .data.mounts[]? | select(.name == "scanserver") | .user_path
+  else
+    empty
+  end
+')
+
+# Set the path to "/config" if jq output is empty
+OUTPUT_PATH=${user_path:-/config}
+
+# Format the counter with leading zeros (e.g., scanserver00001.pdf)
+FILENAME=$(printf "$OUTPUT_PATH/$FILENAME_BASE%05d.pdf" "$COUNTER")
+
+echo "$FILENAME"
